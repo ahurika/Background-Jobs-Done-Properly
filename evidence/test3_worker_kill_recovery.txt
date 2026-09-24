@@ -1,0 +1,15 @@
+
+[Test Runner] Worker killed mid-processing.
+
+[DB state after kill] Status: pending
+
+[DB state after recovery] Status: pending, Attempts: 0
+=========================================
+Worker Started. Concurrency: 1
+=========================================
+[Worker] Claimed 0a5b914a-df90-40be-9593-a71702217c58 (Active: 1/1)
+[EmailProvider] Sending email to user-test3@example.com (Idempotency Key: 0a5b914a-df90-40be-9593-a71702217c58)
+[EmailProvider] Successfully delivered to user-test3@example.com
+[Job 0a5b914a-df90-40be-9593-a71702217c58] Succeeded.
+
+[DB state final] Status: succeeded

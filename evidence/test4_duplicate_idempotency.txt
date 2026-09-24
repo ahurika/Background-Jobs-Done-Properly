@@ -1,0 +1,10 @@
+First insert successful.
+Second insert failed as expected: P2002 - 
+Invalid `prisma.job.create()` invocation in
+C:\Users\USER\Desktop\Background Jobs Done Properly\tests\run-tests.ts:96:22
+
+  93 });
+  94 result += 'First insert successful.\n';
+  95 
+→ 96 await prisma.job.create(
+Unique constraint failed on the fields: (`idempotencyKey`)
