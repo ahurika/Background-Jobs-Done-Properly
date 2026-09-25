@@ -85,5 +85,10 @@ Five rigorous stress tests were scripted in `tests/run-tests.ts` and `tests/run-
 
 *(Logs mapping these behaviors are safely archived in the `evidence/` directory)*.
 
+### Additional Evidence
+- **Jobs Table Statuses**: A screenshot demonstrating all 5 required job states (`pending`, `processing`, `succeeded`, `failed`, `dead`) in the database is available at [`evidence/jobs-table-statuses.png`](evidence/jobs-table-statuses.png).
+- **Test Execution Output**: A screenshot of the terminal running the automated break-it tests is available at [`evidence/tests-run-output.png`](evidence/tests-run-output.png).
+- **Worker Backoff & Recovery**: A screenshot demonstrating the worker's exponential backoff, jitter (`2333ms`, `4002ms`, `8479ms`), stuck job recovery, and transition to `DEAD` is available at [`evidence/worker-retry-backoff-recovery.png`](evidence/worker-retry-backoff-recovery.png).
+
 ---
 **Prepared For:** Task 2, Product Engineering Bootcamp.
