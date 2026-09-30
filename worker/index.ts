@@ -20,12 +20,14 @@ async function tick() {
     return;
   }
 
+  // Reserve slot synchronously before async claim
+  activeJobs++;
+
   try {
     const job = await atomicClaim();
     if (job) {
-      activeJobs++;
       console.log(`[Worker] Claimed ${job.id} (Active: ${activeJobs}/${WORKER_CONCURRENCY})`);
-      
+
       // Fire and forget processing to allow concurrent claims
       processJob(job)
         .catch(e => console.error(`[Worker] Fatal processor error on ${job.id}:`, e))
@@ -33,14 +35,16 @@ async function tick() {
           activeJobs--;
           tick(); // Immediately trigger next poll when capacity frees up
         });
-        
+
       // Try to pick up another job immediately since we have capacity
       tick();
     } else {
+      activeJobs--; // Release slot since no job was claimed
       // No jobs available, backoff polling to save DB resources
       setTimeout(tick, 1000);
     }
   } catch (error) {
+    activeJobs--; // Release slot on error
     console.error('[Worker] Claim operation failed:', error);
     // Severe error (e.g. DB disconnect), backoff longer
     setTimeout(tick, 5000);
