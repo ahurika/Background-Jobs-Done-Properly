@@ -19,17 +19,31 @@ export async function recoverStuckJobs() {
       for (const job of stuckJobs) {
         const newAttempts = job.attempts + 1; 
         
-        await prisma.job.updateMany({
-          where: { id: job.id, status: 'processing' }, // Prevent resetting if status changed concurrently
-          data: {
-            status: 'pending',
-            attempts: newAttempts,
-            runAt: new Date(), // Make eligible immediately
-            startedAt: null,
-            lastError: 'Stuck processing timeout recovery',
-          }
-        });
-        console.log(`[Recovery] Reset job ${job.id} to pending (Attempts: ${newAttempts}).`);
+        if (newAttempts >= job.maxAttempts) {
+          await prisma.job.updateMany({
+            where: { id: job.id, status: 'processing' },
+            data: {
+              status: 'dead',
+              attempts: newAttempts,
+              startedAt: null,
+              finishedAt: new Date(),
+              lastError: 'Stuck processing timeout recovery',
+            }
+          });
+          console.log(`[Recovery] Marked job ${job.id} as dead (Attempts: ${newAttempts}).`);
+        } else {
+          await prisma.job.updateMany({
+            where: { id: job.id, status: 'processing' }, // Prevent resetting if status changed concurrently
+            data: {
+              status: 'pending',
+              attempts: newAttempts,
+              runAt: new Date(), // Make eligible immediately
+              startedAt: null,
+              lastError: 'Stuck processing timeout recovery',
+            }
+          });
+          console.log(`[Recovery] Reset job ${job.id} to pending (Attempts: ${newAttempts}).`);
+        }
       }
     }
   } catch (error) {
