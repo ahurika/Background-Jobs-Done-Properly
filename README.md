@@ -46,13 +46,15 @@ The job iterates through explicit, non-destructive states:
 The database enforces uniqueness on the `idempotencyKey`. If a duplicate request is dispatched, the database natively prevents duplicate insertion (`P2002` error caught), and the API cleanly returns the existing job ID without spawning duplicate workloads.
 
 ### 4. Atomic Claiming
-Workers do not run unsafe `SELECT` -> `UPDATE` workflows. They query and lock the row natively using Prisma's `$queryRaw` executing an `UPDATE ... RETURNING` statement. This makes it structurally impossible for two workers to claim the exact same pending job, effectively eliminating race conditions.
+Workers do not run unsafe `SELECT` -> `UPDATE` workflows. They query and claim the row natively using Prisma's `$queryRaw` executing a single atomic `UPDATE ... RETURNING` statement.
+
+*Note on Concurrency: Because this project uses SQLite, it does not use row-level locking like `FOR UPDATE SKIP LOCKED` (which a PostgreSQL-based version of this pattern would typically use). Instead, this single atomic statement safely eliminates race conditions because SQLite naturally serializes database writes at the database level.*
 
 ### 5. Configurable Concurrency
 Workers rigidly respect `WORKER_CONCURRENCY`. Active jobs are incremented atomically inside the Node loop; the worker artificially delays polling if capacity is saturated, preventing resource starvation.
 
 ### 6. Retry, Exponential Backoff & Jitter
-Failing jobs calculate their next `runAt` dynamically. The backoff formula multiplies `JOB_BACKOFF_BASE_MS` exponentially by the attempt count, then adds up to `JOB_BACKOFF_JITTER_MS` to prevent synchronized retry spikes (thundering herds). 
+Failing jobs calculate their next `runAt` dynamically. The backoff formula multiplies `JOB_BACKOFF_BASE_MS` exponentially by the attempt count, then adds up to `JOB_BACKOFF_JITTER_MS` to prevent synchronized retry spikes (thundering herds).
 
 ### 7. Stuck-Job Recovery
 If a worker physically crashes while `processing`, the job normally stays locked forever. A background recovery sweep periodically scans for jobs older than `JOB_PROCESSING_TIMEOUT_MS` and safely transitions them back to `pending` with an incremented attempt count.
@@ -63,10 +65,10 @@ Jobs exceeding `JOB_MAX_ATTEMPTS` are explicitly set to `dead`. The UI provides 
 ## Defence Notes
 
 ### Q1: Two workers are running. Walk me through exactly how you guarantee they never process the same job.
-**Answer:** The claim query does not do a separate SELECT then UPDATE. I implemented an `UPDATE Job SET status = 'processing' ... WHERE id = (SELECT id FROM Job WHERE status = 'pending' ... LIMIT 1) RETURNING *` via `$queryRaw`. Because the database applies the lock on the row natively during the update phase, the second worker attempting to claim that same job simultaneously will find 0 matching rows to update. It guarantees strict atomicity.
+**Answer:** The claim query does not do a separate SELECT then UPDATE. I implemented an `UPDATE Job SET status = 'processing' ... WHERE id = (SELECT id FROM Job WHERE status = 'pending' ... LIMIT 1) RETURNING *` via `$queryRaw`. This single atomic statement prevents the separate SELECT/UPDATE race, while SQLite serializes concurrent writes at the database level. Therefore, the second worker attempting to claim that same job simultaneously will find 0 matching rows to update, guaranteeing strict atomicity without row-level locking.
 
 ### Q2: Your worker crashed after sending the email but before marking the job done. What happens when it restarts?
-**Answer:** Because the system recovered the stuck job and retried it, the external work is triggered again. However, our provider function natively passes down the `idempotencyKey` (mapped from the database `job.id`). The external email provider inherently recognizes this key and drops the duplicate transmission, yielding a harmless 200 OK back to the worker without duplicating the email. 
+**Answer:** Because the system recovered the stuck job and retried it, the external work is triggered again. However, our provider function natively passes down the `idempotencyKey` (mapped from the database `job.id`). The external email provider inherently recognizes this key and drops the duplicate transmission, yielding a harmless 200 OK back to the worker without duplicating the email.
 
 ### Q3: Why jitter? Show me the line.
 **Answer:** `const delay = (BASE_MS * Math.pow(2, newAttempts - 1)) + Math.floor(Math.random() * JITTER_MS);`
