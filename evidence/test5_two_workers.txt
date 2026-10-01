@@ -1,0 +1,70 @@
+[W2] =========================================
+[W2] Worker Started. Concurrency: 5
+=========================================
+[W1] =========================================
+[W1] Worker Started. Concurrency: 5
+=========================================
+[W2] [Worker] Claimed 10143724-0b90-4091-a7e5-c37805149f38 (Active: 1/5)
+[W2] [EmailProvider] Sending email to user3@example.com (Idempotency Key: 10143724-0b90-4091-a7e5-c37805149f38)
+[W2] [Worker] Claimed dcbb5add-0da8-43ac-8e3c-accba3611fa5 (Active: 2/5)
+[W2] [EmailProvider] Sending email to user4@example.com (Idempotency Key: dcbb5add-0da8-43ac-8e3c-accba3611fa5)
+[W2] [Worker] Claimed b17399b5-c758-4437-9b29-098bf5ea9ef0 (Active: 3/5)
+[W2] [EmailProvider] Sending email to user5@example.com (Idempotency Key: b17399b5-c758-4437-9b29-098bf5ea9ef0)
+[W2] [Worker] Claimed f3fe7347-c68f-4641-95d1-0975ed68b7e2 (Active: 4/5)
+[W2] [EmailProvider] Sending email to user6@example.com (Idempotency Key: f3fe7347-c68f-4641-95d1-0975ed68b7e2)
+[W2] [Worker] Claimed 246183a3-f372-45c0-b10f-46f509c039c2 (Active: 5/5)
+[W2] [EmailProvider] Sending email to user7@example.com (Idempotency Key: 246183a3-f372-45c0-b10f-46f509c039c2)
+[W1] [Worker] Claimed 8ce21a77-07e8-47b1-ab50-9c642196cb6f (Active: 1/5)
+[W1] [EmailProvider] Sending email to user8@example.com (Idempotency Key: 8ce21a77-07e8-47b1-ab50-9c642196cb6f)
+[W1] [Worker] Claimed 53841d67-cc6b-4d23-bc89-1cacad597d85 (Active: 2/5)
+[W1] [EmailProvider] Sending email to user9@example.com (Idempotency Key: 53841d67-cc6b-4d23-bc89-1cacad597d85)
+[W1] [Worker] Claimed 6187f540-6f5a-4cac-af6c-808e2b0f4e94 (Active: 3/5)
+[W1] [EmailProvider] Sending email to user10@example.com (Idempotency Key: 6187f540-6f5a-4cac-af6c-808e2b0f4e94)
+[W1] [Worker] Claimed 6c8fa6bd-f0b8-416b-b211-fdd798fd3126 (Active: 4/5)
+[W1] [EmailProvider] Sending email to user11@example.com (Idempotency Key: 6c8fa6bd-f0b8-416b-b211-fdd798fd3126)
+[W1] [Worker] Claimed 81ddd672-2b32-4825-ac76-d8b4dcb96237 (Active: 5/5)
+[W1] [EmailProvider] Sending email to user12@example.com (Idempotency Key: 81ddd672-2b32-4825-ac76-d8b4dcb96237)
+[W2] [EmailProvider] Successfully delivered to user3@example.com
+[W2] [Job 10143724-0b90-4091-a7e5-c37805149f38] Succeeded.
+[W2] [Worker] Claimed a6271984-8859-4812-a060-a7bfab128bd8 (Active: 5/5)
+[W2] [EmailProvider] Sending email to user14@example.com (Idempotency Key: a6271984-8859-4812-a060-a7bfab128bd8)
+[W2] [EmailProvider] Successfully delivered to user4@example.com
+[W2] [Job dcbb5add-0da8-43ac-8e3c-accba3611fa5] Succeeded.
+[W2] [Worker] Claimed e087a71a-440e-4ce9-ac4f-803cd5d4671f (Active: 5/5)
+[W2] [EmailProvider] Sending email to user15@example.com (Idempotency Key: e087a71a-440e-4ce9-ac4f-803cd5d4671f)
+[W2] [Worker] Claimed bc974c7d-92d8-4ef5-95de-7e86cc926f3c (Active: 6/5)
+[EmailProvider] Sending email to user16@example.com (Idempotency Key: bc974c7d-92d8-4ef5-95de-7e86cc926f3c)
+[W1] [EmailProvider] Successfully delivered to user9@example.com
+[W1] [Job 53841d67-cc6b-4d23-bc89-1cacad597d85] Succeeded.
+[W1] [EmailProvider] Successfully delivered to user10@example.com
+[W1] [Worker] Claimed 668b8db1-cf97-4b57-bb0f-4d541e3ec66a (Active: 5/5)
+[EmailProvider] Sending email to user17@example.com (Idempotency Key: 668b8db1-cf97-4b57-bb0f-4d541e3ec66a)
+[W1] [Job 6187f540-6f5a-4cac-af6c-808e2b0f4e94] Succeeded.
+[W1] [Worker] Claimed 78077761-b4bd-4302-89f4-724c69b4cb4c (Active: 5/5)
+[EmailProvider] Sending email to user18@example.com (Idempotency Key: 78077761-b4bd-4302-89f4-724c69b4cb4c)
+[W2] [EmailProvider] Successfully delivered to user5@example.com
+[W1] [EmailProvider] Successfully delivered to user8@example.com
+[W2] [EmailProvider] Successfully delivered to user7@example.com
+[W2] [Job b17399b5-c758-4437-9b29-098bf5ea9ef0] Succeeded.
+[W2] [Job 246183a3-f372-45c0-b10f-46f509c039c2] Succeeded.
+[W2] [Worker] Claimed b295509d-2837-4d88-857e-fe7878919cd2 (Active: 5/5)
+[W2] [EmailProvider] Sending email to user19@example.com (Idempotency Key: b295509d-2837-4d88-857e-fe7878919cd2)
+[W2] [EmailProvider] Successfully delivered to user6@example.com
+[W1] [Job 8ce21a77-07e8-47b1-ab50-9c642196cb6f] Succeeded.
+[W1] [EmailProvider] Successfully delivered to user11@example.com
+[W2] [Job f3fe7347-c68f-4641-95d1-0975ed68b7e2] Succeeded.
+[W1] [EmailProvider] Successfully delivered to user12@example.com
+[W1] [Job 81ddd672-2b32-4825-ac76-d8b4dcb96237] Succeeded.
+[W2] [EmailProvider] Successfully delivered to user14@example.com
+[W1] [EmailProvider] Successfully delivered to user18@example.com
+[W1] [Job 78077761-b4bd-4302-89f4-724c69b4cb4c] Succeeded.
+[W2] [EmailProvider] Successfully delivered to user16@example.com
+[W2] [Job bc974c7d-92d8-4ef5-95de-7e86cc926f3c] Succeeded.
+[W2] [Job a6271984-8859-4812-a060-a7bfab128bd8] Succeeded.
+[W1] [Job 6c8fa6bd-f0b8-416b-b211-fdd798fd3126] Succeeded.
+[W1] [EmailProvider] Successfully delivered to user17@example.com
+[W1] [Job 668b8db1-cf97-4b57-bb0f-4d541e3ec66a] Succeeded.
+[W2] [EmailProvider] Successfully delivered to user15@example.com
+[W2] [Job e087a71a-440e-4ce9-ac4f-803cd5d4671f] Succeeded.
+[W2] [EmailProvider] Successfully delivered to user19@example.com
+[W2] [Job b295509d-2837-4d88-857e-fe7878919cd2] Succeeded.

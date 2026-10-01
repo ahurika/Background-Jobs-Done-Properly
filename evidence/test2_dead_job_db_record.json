@@ -1,0 +1,16 @@
+{
+  "id": "10b167db-b701-4f85-a931-31d7bd5b03fa",
+  "type": "SEND_EMAIL",
+  "payload": "{\"to\":\"fail@example.com\"}",
+  "status": "dead",
+  "attempts": 3,
+  "maxAttempts": 3,
+  "lastError": "Simulated email provider rejection",
+  "runAt": "2026-10-01T13:08:41.235Z",
+  "startedAt": "2026-10-01T13:08:41.807Z",
+  "finishedAt": "2026-10-01T13:08:42.216Z",
+  "idempotencyKey": "test2-fail",
+  "userId": "test2",
+  "createdAt": "2026-10-01T13:08:34.765Z",
+  "updatedAt": "2026-10-01T13:08:42.217Z"
+}
