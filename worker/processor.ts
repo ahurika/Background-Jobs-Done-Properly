@@ -46,14 +46,14 @@ export async function processJob(job: any) {
       await prisma.job.update({
         where: { id: job.id },
         data: {
-          status: 'pending',
+          status: 'failed',
           attempts: newAttempts,
           lastError,
           runAt: nextRunAt,
           startedAt: null, // Reset for next worker claim
         }
       });
-      console.log(`[Job ${job.id}] Retrying in ${delay}ms...`);
+      console.log(`[Job ${job.id}] Status set to FAILED. Retrying in ${delay}ms...`);
     }
   }
 }

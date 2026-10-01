@@ -3,7 +3,7 @@ import path from 'path';
 // Load .env configuration from the project root
 config({ path: path.resolve(__dirname, '../.env') });
 
-import { atomicClaim } from './claim';
+import { atomicClaim, promoteReadyFailedJobs } from './claim';
 import { processJob } from './processor';
 import { recoverStuckJobs } from './recovery';
 
@@ -24,6 +24,7 @@ async function tick() {
   activeJobs++;
 
   try {
+    await promoteReadyFailedJobs();
     const job = await atomicClaim();
     if (job) {
       console.log(`[Worker] Claimed ${job.id} (Active: ${activeJobs}/${WORKER_CONCURRENCY})`);

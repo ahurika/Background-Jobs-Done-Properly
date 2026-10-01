@@ -30,3 +30,20 @@ export async function atomicClaim() {
   }
   return null;
 }
+
+export async function promoteReadyFailedJobs() {
+  const result = await prisma.job.updateMany({
+    where: {
+      status: 'failed',
+      runAt: { lte: new Date() }
+    },
+    data: {
+      status: 'pending',
+      updatedAt: new Date()
+    }
+  });
+
+  if (result.count > 0) {
+    console.log(`[Worker] Promoted ${result.count} failed jobs to pending.`);
+  }
+}

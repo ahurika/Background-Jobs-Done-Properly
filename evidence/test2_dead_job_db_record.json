@@ -1,16 +1,16 @@
 {
-  "id": "a6f420aa-cddc-4256-b70c-6c3a046e7d4a",
+  "id": "10b167db-b701-4f85-a931-31d7bd5b03fa",
   "type": "SEND_EMAIL",
   "payload": "{\"to\":\"fail@example.com\"}",
   "status": "dead",
   "attempts": 3,
   "maxAttempts": 3,
   "lastError": "Simulated email provider rejection",
-  "runAt": "2026-09-25T15:53:50.546Z",
-  "startedAt": "2026-09-25T15:53:50.658Z",
-  "finishedAt": "2026-09-25T15:53:50.932Z",
+  "runAt": "2026-10-01T13:08:41.235Z",
+  "startedAt": "2026-10-01T13:08:41.807Z",
+  "finishedAt": "2026-10-01T13:08:42.216Z",
   "idempotencyKey": "test2-fail",
   "userId": "test2",
-  "createdAt": "2026-09-25T15:53:45.934Z",
-  "updatedAt": "2026-09-25T15:53:50.936Z"
+  "createdAt": "2026-10-01T13:08:34.765Z",
+  "updatedAt": "2026-10-01T13:08:42.217Z"
 }

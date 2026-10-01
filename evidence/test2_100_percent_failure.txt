@@ -2,3 +2,17 @@
 =========================================
 Worker Started. Concurrency: 5
 =========================================
+[Worker] Claimed 10b167db-b701-4f85-a931-31d7bd5b03fa (Active: 1/5)
+[EmailProvider] Sending email to fail@example.com (Idempotency Key: 10b167db-b701-4f85-a931-31d7bd5b03fa)
+[Job 10b167db-b701-4f85-a931-31d7bd5b03fa] Failed: Simulated email provider rejection (Attempt 1/3)
+[Job 10b167db-b701-4f85-a931-31d7bd5b03fa] Status set to FAILED. Retrying in 1079ms...
+[Worker] Promoted 1 failed jobs to pending.
+[Worker] Claimed 10b167db-b701-4f85-a931-31d7bd5b03fa (Active: 1/5)
+[EmailProvider] Sending email to fail@example.com (Idempotency Key: 10b167db-b701-4f85-a931-31d7bd5b03fa)
+[Job 10b167db-b701-4f85-a931-31d7bd5b03fa] Failed: Simulated email provider rejection (Attempt 2/3)
+[Job 10b167db-b701-4f85-a931-31d7bd5b03fa] Status set to FAILED. Retrying in 2239ms...
+[Worker] Promoted 1 failed jobs to pending.
+[Worker] Claimed 10b167db-b701-4f85-a931-31d7bd5b03fa (Active: 1/5)
+[EmailProvider] Sending email to fail@example.com (Idempotency Key: 10b167db-b701-4f85-a931-31d7bd5b03fa)
+[Job 10b167db-b701-4f85-a931-31d7bd5b03fa] Failed: Simulated email provider rejection (Attempt 3/3)
+[Job 10b167db-b701-4f85-a931-31d7bd5b03fa] Exhausted retries. Status is now DEAD.
